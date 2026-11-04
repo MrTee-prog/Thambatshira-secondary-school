@@ -1,10 +1,13 @@
-const CACHE_NAME = "thambatshira-school-v3";
+const CACHE_NAME = "thambatshira-school-v3-flat";
 const APP_SHELL = [
-  "./", "./index.html", "./style.css", "./script.js", "./school-emblem.png",
-  "./assets/school-emblem.jpeg", "./assets/school-principal.jpeg",
-  "./manifest.json", "./icon-192.png", "./icon-512.png", "./privacy.html",
-  "./parent-consent.html", "./downloads/parent-guardian-event-trip-consent-form.pdf", "./downloads/parent-guardian-event-trip-consent-form.docx", "./downloads/parent-guardian-event-trip-consent-form.pdf",
-  "./downloads/parent-guardian-event-trip-consent-form.docx"
+  "./", "./index.html", "./style.css", "./script.js",
+  "./school-emblem.png", "./school-emblem.jpeg", "./school-principal.jpeg",
+  "./manifest.json", "./icon-192.png", "./icon-512.png",
+  "./privacy.html", "./parent-consent.html",
+  "./parent-guardian-event-trip-consent-form.pdf",
+  "./parent-guardian-event-trip-consent-form.docx",
+  "./Thambatshira_Admission_Application.pdf",
+  "./Thambatshira_Admission_Application.html"
 ];
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_SHELL)).then(() => self.skipWaiting()));

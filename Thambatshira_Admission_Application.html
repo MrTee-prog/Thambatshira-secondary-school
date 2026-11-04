@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en-ZA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Online fillable admission application for Thambatshira Secondary School.">
+<title>Online Admission Application | Thambatshira Secondary School</title>
+<style>
+:root{--navy:#102b5b;--gold:#d6ad35;--ink:#172033;--line:#aab3c2}
+*{box-sizing:border-box}body{margin:0;background:#eef2f7;color:var(--ink);font:15px Arial,sans-serif}
+.top{background:var(--navy);color:white;padding:22px max(18px,calc((100% - 980px)/2))}
+.top h1{font-size:22px;margin:0 0 6px}.top p{margin:0;line-height:1.5}
+.wrap{max-width:980px;margin:22px auto;padding:0 14px}
+.notice{background:#fff8df;border-left:5px solid var(--gold);padding:13px 15px;border-radius:6px;line-height:1.5;margin-bottom:16px}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}
+button,.btn{border:0;border-radius:6px;padding:12px 17px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block}
+.primary{background:var(--navy);color:white}.secondary{background:#e5eaf2;color:var(--navy)}
+.page{background:white;padding:24px;border-radius:9px;box-shadow:0 3px 16px #102b5b12;margin:16px 0 24px}
+h2{font-size:18px;color:var(--navy);border-bottom:2px solid var(--gold);padding-bottom:8px;margin:0 0 16px}
+h3{font-size:15px;color:var(--navy);margin:22px 0 10px;border-bottom:1px solid #d7dde7;padding-bottom:6px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.field{display:flex;flex-direction:column;gap:5px;min-width:0}
+.field.full{grid-column:1/-1}
+label{font-size:13px;font-weight:700}
+input,select,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:5px;font:inherit;background:#fff;color:var(--ink)}
+textarea{min-height:72px;resize:vertical}
+small{color:#566174;line-height:1.45}
+.checks{display:flex;gap:18px;flex-wrap:wrap;padding:8px 0}
+.checks label{font-weight:400}
+footer{max-width:980px;margin:0 auto;padding:0 14px 30px;color:#566174;font-size:13px}
+@media(max-width:650px){.grid{grid-template-columns:1fr}.page{padding:16px}.top h1{font-size:19px}}
+@media print{
+ body{background:white;font-size:10pt}.top{background:white;color:#111;padding:0 0 12px;border-bottom:2px solid #111}
+ .wrap{max-width:none;margin:0;padding:0}.notice,.actions,.no-print,footer{display:none!important}
+ .page{box-shadow:none;border-radius:0;margin:0;padding:10mm;break-after:page;page-break-after:always}
+ .page:last-of-type{break-after:auto;page-break-after:auto}
+ input,select,textarea{border:0;border-bottom:1px solid #555;border-radius:0;padding:3px 1px;background:transparent;color:#111;appearance:none}
+ textarea{min-height:35px}.field{break-inside:avoid}h3{margin-top:12px}
+}
+</style>
+</head>
+<body>
+<header class="top">
+<h1>Thambatshira Secondary School</h1>
+<p>477 Maunguwe, Thohoyandou, 0950 · Telephone: 082 852 3343</p>
+<p><strong>Online admission application</strong> — complete both pages, then save a PDF copy.</p>
+</header>
+<main class="wrap">
+<div class="notice"><strong>Please read:</strong> This online form is a digital recreation of the paper application supplied to us. The school must verify and approve it before official use. Completing it does not mean the learner has been accepted. Information entered here stays in this browser until you choose to print/save or prepare an email; this GitHub Pages version does not store or transmit applications automatically.</div>
+<div class="actions no-print">
+<button class="primary" type="button" onclick="savePdf()">Save / download completed application (PDF)</button>
+<button class="secondary" type="button" onclick="prepareEmail()">Prepare email to school</button>
+<button class="secondary" type="reset" form="admissionForm">Clear form</button>
+</div>
+<form id="admissionForm">
+<section class="page">
+<h2>APPLICATION FOR ADMISSION TO SCHOOL — PAGE 1</h2>
+<div class="grid">
+<div class="field"><label for="applicationYear">Year applying</label><input id="applicationYear" name="Year applying" type="number" min="2026" required></div>
+<div class="field"><label for="grade">Grade applied for (8–12)</label><select id="grade" name="Grade applied for" required><option value="">Choose grade</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select></div>
+<div class="field"><label for="highestGrade">Highest grade passed</label><input id="highestGrade" name="Highest grade passed"></div>
+<div class="field"><label for="passedYear">Year when grade was passed</label><input id="passedYear" name="Year grade passed" type="number"></div>
+<div class="field"><label for="surname">Learner surname</label><input id="surname" name="Learner surname" required></div>
+<div class="field"><label for="initials">Initials</label><input id="initials" name="Initials"></div>
+<div class="field"><label for="firstName">Learner first name</label><input id="firstName" name="Learner first name" required></div>
+<div class="field"><label for="nickname">Nickname</label><input id="nickname" name="Nickname"></div>
+<div class="field"><label for="dob">Date of birth</label><input id="dob" name="Date of birth" type="date" required></div>
+<div class="field"><label for="otherNames">Other names</label><input id="otherNames" name="Other names"></div>
+<div class="field"><label for="gender">Gender</label><select id="gender" name="Gender"><option value="">Choose</option><option>Male</option><option>Female</option></select></div>
+<div class="field"><label for="learnerId">ID or passport number</label><input id="learnerId" name="Learner ID or passport"></div>
+<div class="field"><label for="race">Race (as recorded on school form)</label><input id="race" name="Race"></div>
+<div class="field"><label for="citizenship">Citizenship</label><input id="citizenship" name="Citizenship"></div>
+<div class="field"><label for="country">Country of residence</label><input id="country" name="Country of residence"></div>
+<div class="field"><label for="province">Province (if South African)</label><input id="province" name="Province"></div>
+<div class="field full"><label for="physicalAddress">Physical address</label><textarea id="physicalAddress" name="Physical address"></textarea></div>
+<div class="field"><label for="city">City / suburb</label><input id="city" name="City or suburb"></div>
+<div class="field"><label for="postalCode">Postal code</label><input id="postalCode" name="Postal code"></div>
+<div class="field"><label for="homeTel">Home telephone</label><input id="homeTel" name="Home telephone" type="tel"></div>
+<div class="field"><label for="emergencyTel">Emergency telephone</label><input id="emergencyTel" name="Emergency telephone" type="tel"></div>
+<div class="field"><label for="learnerCell">Learner cell</label><input id="learnerCell" name="Learner cell" type="tel"></div>
+<div class="field"><label for="learnerEmail">Learner email</label><input id="learnerEmail" name="Learner email" type="email"></div>
+<div class="field"><label for="homeLanguage">Home language</label><input id="homeLanguage" name="Home language"></div>
+<div class="field"><label for="instructionLanguage">Preferred language of instruction</label><input id="instructionLanguage" name="Preferred language of instruction"></div>
+<div class="field"><label for="boarder">Boarder?</label><select id="boarder" name="Boarder"><option value="">Choose</option><option>Yes</option><option>No</option></select></div>
+<div class="field"><label for="transport">Mode of transport</label><input id="transport" name="Mode of transport"></div>
+<div class="field"><label for="deceasedParent">Deceased parent</label><select id="deceasedParent" name="Deceased parent"><option value="">Choose</option><option>Mother</option><option>Father</option><option>Both</option><option>Neither / not applicable</option></select></div>
+<div class="field"><label for="religion">Religion</label><input id="religion" name="Religion"></div>
+<div class="field full"><label for="preprimary">Pre-primary education (original form says Grade 1 only)</label><select id="preprimary" name="Pre-primary education"><option value="">Choose</option><option>None</option><option>Non-formal</option><option>Formal</option><option>Not applicable</option></select></div>
+</div>
+<h3>Previous school information</h3><div class="grid">
+<div class="field"><label for="prevSchool">Name of previous school</label><input id="prevSchool" name="Previous school"></div>
+<div class="field"><label for="prevCode">School code</label><input id="prevCode" name="Previous school code"></div>
+<div class="field full"><label for="prevAddress">Previous school address</label><textarea id="prevAddress" name="Previous school address"></textarea></div>
+<div class="field"><label for="prevProvince">Province</label><input id="prevProvince" name="Previous school province"></div>
+<div class="field"><label for="prevCountry">Country</label><input id="prevCountry" name="Previous school country"></div>
+</div>
+<h3>Learner medical information</h3><div class="grid">
+<div class="field"><label for="medicalAidNo">Medical aid number</label><input id="medicalAidNo" name="Medical aid number"></div>
+<div class="field"><label for="medicalAidName">Medical aid name</label><input id="medicalAidName" name="Medical aid name"></div>
+<div class="field"><label for="medicalMain">Medical aid main member</label><input id="medicalMain" name="Medical aid main member"></div>
+<div class="field"><label for="doctor">Doctor name</label><input id="doctor" name="Doctor name"></div>
+<div class="field full"><label for="doctorAddress">Doctor's address</label><textarea id="doctorAddress" name="Doctor address"></textarea></div>
+<div class="field"><label for="doctorTel">Doctor telephone</label><input id="doctorTel" name="Doctor telephone" type="tel"></div>
+<div class="field"><label for="dexterity">Dexterity</label><select id="dexterity" name="Dexterity"><option value="">Choose</option><option>Right-handed</option><option>Left-handed</option><option>Ambidextrous</option></select></div>
+<div class="field full"><label for="medicalCondition">Medical condition</label><textarea id="medicalCondition" name="Medical condition"></textarea></div>
+<div class="field full"><label for="counselling">Special problems requiring counselling</label><textarea id="counselling" name="Special problems requiring counselling"></textarea></div>
+<div class="field"><label for="registeredGrant">Registered social grant?</label><select id="registeredGrant" name="Registered social grant"><option value="">Choose</option><option>Yes</option><option>No</option></select></div>
+<div class="field"><label for="receivedGrant">Received social grant?</label><select id="receivedGrant" name="Received social grant"><option value="">Choose</option><option>Yes</option><option>No</option></select></div>
+</div>
+<p><strong>Documents to submit if the learner is accepted:</strong> Immunisation records, birth certificate, progress report from previous school, and transfer letter from previous school.</p>
+</section>
+<section class="page">
+<h2>APPLICATION FOR ADMISSION TO SCHOOL — PAGE 2</h2>
+<h3>Siblings</h3><div class="grid">
+<div class="field"><label for="siblingsCount">Number of other children at this school</label><input id="siblingsCount" name="Number of siblings at school" type="number" min="0"></div>
+<div class="field"><label for="familyPosition">Position in family (e.g. first)</label><input id="familyPosition" name="Position in family"></div>
+<div class="field"><label for="sib1">Sibling 1 full name</label><input id="sib1" name="Sibling 1 name"></div><div class="field"><label for="sib1grade">Sibling 1 grade</label><input id="sib1grade" name="Sibling 1 grade"></div>
+<div class="field"><label for="sib2">Sibling 2 full name</label><input id="sib2" name="Sibling 2 name"></div><div class="field"><label for="sib2grade">Sibling 2 grade</label><input id="sib2grade" name="Sibling 2 grade"></div>
+<div class="field"><label for="sib3">Sibling 3 full name</label><input id="sib3" name="Sibling 3 name"></div><div class="field"><label for="sib3grade">Sibling 3 grade</label><input id="sib3grade" name="Sibling 3 grade"></div>
+</div>
+<h3>Parent / guardian information</h3><div class="grid">
+<div class="field"><label for="parentTitle">Title</label><input id="parentTitle" name="Parent title"></div><div class="field"><label for="parentInitials">Initials</label><input id="parentInitials" name="Parent initials"></div>
+<div class="field"><label for="parentSurname">Surname</label><input id="parentSurname" name="Parent surname" required></div><div class="field"><label for="parentFirst">First name</label><input id="parentFirst" name="Parent first name" required></div>
+<div class="field"><label for="parentGender">Gender</label><select id="parentGender" name="Parent gender"><option value="">Choose</option><option>Male</option><option>Female</option></select></div>
+<div class="field"><label for="parentLanguage">Home language</label><input id="parentLanguage" name="Parent home language"></div>
+<div class="field"><label for="parentRace">Race</label><input id="parentRace" name="Parent race"></div>
+<div class="field"><label for="parentId">ID number</label><input id="parentId" name="Parent ID number"></div>
+<div class="field"><label for="parentPassport">Passport number (if applicable)</label><input id="parentPassport" name="Parent passport number"></div>
+<div class="field"><label for="accountPayer">Account payer?</label><select id="accountPayer" name="Account payer"><option value="">Choose</option><option>Yes</option><option>No</option></select></div>
+<div class="field full"><label for="parentAddress">Residential street address</label><textarea id="parentAddress" name="Parent residential address"></textarea></div>
+<div class="field"><label for="parentCity">City / suburb</label><input id="parentCity" name="Parent city or suburb"></div><div class="field"><label for="parentCode">Postal code</label><input id="parentCode" name="Parent postal code"></div>
+<div class="field"><label for="occupation">Occupation</label><input id="occupation" name="Occupation"></div><div class="field"><label for="employer">Employer</label><input id="employer" name="Employer"></div>
+<div class="field"><label for="spouseSurname">Spouse surname</label><input id="spouseSurname" name="Spouse surname"></div><div class="field"><label for="spouseFirst">Spouse first name</label><input id="spouseFirst" name="Spouse first name"></div>
+<div class="field"><label for="spouseOccupation">Spouse occupation</label><input id="spouseOccupation" name="Spouse occupation"></div>
+<div class="field"><label for="residesWith">Learner resides with this parent?</label><select id="residesWith" name="Learner resides with parent"><option value="">Choose</option><option>Yes</option><option>No</option></select></div>
+<div class="field"><label for="spouseId">Spouse ID number</label><input id="spouseId" name="Spouse ID number"></div>
+<div class="field"><label for="relationship">Relationship to learner</label><input id="relationship" name="Relationship to learner"></div>
+<div class="field"><label for="marital">Marital status of parent</label><input id="marital" name="Marital status"></div>
+</div>
+<h3>Correspondence details</h3><div class="grid">
+<div class="field"><label for="corrTitle">Title</label><input id="corrTitle" name="Correspondence title"></div><div class="field"><label for="corrSurname">Surname</label><input id="corrSurname" name="Correspondence surname"></div>
+<div class="field full"><label for="postalAddress">Postal address</label><textarea id="postalAddress" name="Postal address"></textarea></div>
+<div class="field"><label for="corrCity">City / suburb</label><input id="corrCity" name="Correspondence city"></div><div class="field"><label for="corrCode">Postal code</label><input id="corrCode" name="Correspondence postal code"></div>
+</div>
+<h3>Other contact details</h3><div class="grid">
+<div class="field"><label for="parentHome">Home telephone</label><input id="parentHome" name="Parent home telephone" type="tel"></div><div class="field"><label for="workTel">Work telephone</label><input id="workTel" name="Work telephone" type="tel"></div>
+<div class="field"><label for="fax">Fax number</label><input id="fax" name="Fax number"></div><div class="field"><label for="parentCell">Cell number</label><input id="parentCell" name="Parent cell number" type="tel" required></div>
+<div class="field"><label for="spouseWork">Spouse work telephone</label><input id="spouseWork" name="Spouse work telephone" type="tel"></div><div class="field"><label for="spouseCell">Spouse cell number</label><input id="spouseCell" name="Spouse cell number" type="tel"></div>
+<div class="field"><label for="parentEmail">Email address</label><input id="parentEmail" name="Parent email" type="email" required></div><div class="field"><label for="spouseEmail">Spouse email address</label><input id="spouseEmail" name="Spouse email" type="email"></div>
+</div>
+<h3>Parent / guardian declaration</h3>
+<p>I hereby declare that, to the best of my knowledge, the information supplied above is accurate and correct. The parent/guardian must sign the printed application.</p>
+<div class="grid">
+<div class="field"><label for="declarant">Parent / guardian full name (print)</label><input id="declarant" name="Declarant full name" required></div>
+<div class="field"><label for="declarationDate">Date</label><input id="declarationDate" name="Declaration date" type="date" required></div>
+<div class="field full"><label for="signatureNote">Signature</label><input id="signatureNote" value="Sign by hand after printing" readonly></div>
+</div>
+<p class="no-print"><strong>Office use only:</strong> The school office completes acceptance, accession number, rejection reason and document-received fields after submission.</p>
+</section>
+</form>
+</main>
+<footer>Thambatshira Secondary School · Please contact the school to confirm application requirements and submission arrangements.</footer>
+<script>
+function savePdf(){
+ const form=document.getElementById('admissionForm');
+ if(!form.reportValidity()) return;
+ window.print();
+}
+function prepareEmail(){
+ const form=document.getElementById('admissionForm');
+ if(!form.reportValidity()) return;
+ const learner=document.getElementById('firstName').value+' '+document.getElementById('surname').value;
+ const year=document.getElementById('applicationYear').value;
+ const subject=encodeURIComponent('Admission application - '+learner+' - '+year);
+ const body=encodeURIComponent('Dear Thambatshira Secondary School Admissions Office,\n\nI have completed the online admission application for '+learner+' (Grade '+document.getElementById('grade').value+', '+year+').\n\nI will attach the completed application PDF and supporting documents to this email.\n\nKind regards,\n'+document.getElementById('declarant').value+'\n'+document.getElementById('parentCell').value);
+ alert('Your email app will open. First choose “Save / download completed application (PDF)” and save the PDF. Then attach that PDF and any required supporting documents to the email before sending.');
+ window.location.href='mailto:thambatshira.admissions@gmail.com?subject='+subject+'&body='+body;
+}
+document.getElementById('admissionForm').addEventListener('reset',()=>setTimeout(()=>window.scrollTo({top:0,behavior:'smooth'}),0));
+</script>
+</body></html>
