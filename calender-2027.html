@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#192e5b">
+
+  <title>2027 School Calendar | Thambatshira Secondary School</title>
+
+  <style>
+    :root {
+      --navy: #192e5b;
+      --gold: #d5b348;
+      --light: #f1f4f8;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--light);
+      color: #20283a;
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--navy);
+      color: white;
+      text-align: center;
+      padding: 35px 20px;
+      border-bottom: 6px solid var(--gold);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    main {
+      width: min(950px, 92%);
+      margin: 30px auto;
+    }
+
+    .intro {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .term {
+      background: white;
+      border-radius: 12px;
+      padding: 22px;
+      margin-bottom: 18px;
+      border-left: 6px solid var(--gold);
+      box-shadow: 0 3px 12px #00000010;
+    }
+
+    .term h2 {
+      color: var(--navy);
+      margin-top: 0;
+    }
+
+    .dates {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .back {
+      display: inline-block;
+      background: var(--navy);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      margin: 10px 0 25px;
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    footer {
+      text-align: center;
+      background: var(--navy);
+      color: white;
+      padding: 20px;
+      margin-top: 35px;
+    }
+
+    @media print {
+      .back {
+        display: none;
+      }
+
+      body {
+        background: white;
+      }
+
+      .term {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>THAMBATSHIRA SECONDARY SCHOOL</h1>
+    <p>Official School Calendar — 2027</p>
+  </header>
+
+  <main>
+
+    <a class="back" href="index.html">← Back to Homepage</a>
+
+    <section class="intro">
+      <h2>2027 Academic Year</h2>
+      <p>School term dates and academic year overview.</p>
+    </section>
+
+    <section class="term">
+      <h2>Term 1</h2>
+      <p class="dates">13 January – 19 March 2027</p>
+      <p>First term of the academic year.</p>
+    </section>
+
+    <section class="term">
+      <h2>Term 2</h2>
+      <p class="dates">6 April – 25 June 2027</p>
+      <p>Second term of the academic year.</p>
+    </section>
+
+    <section class="term">
+      <h2>Term 3</h2>
+      <p class="dates">20 July – 22 September 2027</p>
+      <p>Third term of the academic year.</p>
+    </section>
+
+    <section class="term">
+      <h2>Term 4</h2>
+      <p class="dates">5 October – 8 December 2027</p>
+      <p>Final term of the academic year.</p>
+    </section>
+
+    <button class="back" onclick="window.print()">
+      Print / Save Calendar as PDF
+    </button>
+
+  </main>
+
+  <footer>
+    <p>Thambatshira Secondary School</p>
+    <p>Shayandima, Limpopo, South Africa</p>
+    <p>© 2027</p>
+  </footer>
+
+</body>
+</html>
