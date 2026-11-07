@@ -18,7 +18,7 @@
     <button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
     <nav id="mainNav">
       <a href="#home">Home</a><a href="#principal">Principal</a><a href="#about">About</a><a href="#academics">Academics</a>
-      <a href="#admissions">Admissions</a><a href="#downloads">Downloads</a><a href="#school-life">School life</a><a href="#contact">Contact</a>
+      <a href="#admissions">Admissions</a><a href="#downloads">Downloads</a><a href="#school-life">School life</a><a href="calendar-2027.html">2027 School Calendar</a><a href="#contact">Contact</a>
     </nav>
   </header>
 
@@ -125,6 +125,44 @@
       </div></div>
     </section>
 
+    <section class="section" id="live-updates">
+
+  <div class="section-heading">
+    <p class="eyebrow">STAY INFORMED</p>
+    <h2>School announcements & events</h2>
+    <section class="section tinted" id="academic-calendar">
+  <div class="section-heading">
+    <p class="eyebrow">PLAN AHEAD</p>
+    <h2>Academic Calendar</h2>
+    <p>Important academic dates and school activities.</p>
+  </div>
+
+  <div id="publicAcademicCalendar" class="live-list">
+    <p class="live-loading">Loading academic calendar...</p>
+  </div>
+</section>
+    <p>Latest updates from Thambatshira Secondary School.</p>
+  </div>
+
+  <div class="live-updates-grid">
+
+    <div>
+      <h3 class="live-heading">📢 Latest announcements</h3>
+      <div id="publicAnnouncements" class="live-list">
+        <p class="live-loading">Loading announcements...</p>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="live-heading">🗓️ Upcoming school events</h3>
+      <div id="publicEvents" class="live-list">
+        <p class="live-loading">Loading school events...</p>
+      </div>
+    </div>
+
+  </div>
+
+</section>
     <section class="section tinted" id="school-life">
       <div class="section-heading"><p class="eyebrow">OUR SCHOOL COMMUNITY</p><h2>School life & resources</h2><p>This section is ready for the school to add verified updates and resources.</p></div>
       <div class="feature-grid">
@@ -151,6 +189,11 @@
     <img src="school-emblem.jpeg" alt="" aria-hidden="true">
     <div><strong>Thambatshira Secondary School</strong><p>We Strive for Quality Education</p><small>© <span id="year"></span> Thambatshira Secondary School. All rights reserved.</small></div>
   </footer>
-  <script src="script.js"></script>
+ <script src="script.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="public-content.js"></script>
+
 </body>
 </html>

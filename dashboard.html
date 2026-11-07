@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#192e5b">
+
+  <title>Staff Dashboard | Thambatshira Secondary School</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #eef1f6;
+      color: #20283a;
+    }
+
+    header {
+      background: #192e5b;
+      color: white;
+      padding: 25px;
+      border-bottom: 5px solid #d5b348;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    header p {
+      margin-bottom: 0;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 25px auto;
+      padding: 0 16px;
+    }
+
+    .panel, .card {
+      background: white;
+      padding: 22px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 3px 15px #0000000d;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      border-top: 5px solid #d5b348;
+    }
+
+    h2 {
+      color: #192e5b;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin: 14px 0 6px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #b8c1d0;
+      border-radius: 7px;
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    button {
+      padding: 12px 18px;
+      border: none;
+      border-radius: 7px;
+      background: #192e5b;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .logout {
+      background: #a83232;
+    }
+
+    .status {
+      font-size: 14px;
+      color: #526078;
+      overflow-wrap: anywhere;
+    }
+
+    .error {
+      color: #b42318;
+    }
+
+    .success {
+      color: #16743b;
+    }
+
+    #loading {
+      padding: 20px;
+      text-align: center;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 18px;
+      }
+
+      .panel, .card {
+        padding: 17px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>THAMBATSHIRA SECONDARY SCHOOL</h1>
+    <p>Staff Administration Dashboard</p>
+  </header>
+
+  <main class="container">
+
+    <p id="loading" style="display: !important; color: red; background: white; padding: 30px; font-size: 24px;"></p>
+
+    <div id="dashboardContent" hidden>
+
+      <section class="panel">
+        <h2>Welcome, <span id="staffName">Staff member</span></h2>
+
+        <p>
+          Your role:
+          <strong id="staffRole">Loading...</strong>
+        </p>
+
+        <button class="logout" id="logoutButton">
+          Sign Out
+        </button>
+
+        <p id="accountMessage" class="status" role="status"></p>
+      </section>
+
+      <section class="cards">
+
+        <div class="card">
+          <h2>Announcements</h2>
+          <p>Publish school notices and important updates.</p>
+        </div>
+
+        <div class="card">
+          <h2>School Events</h2>
+          <p>Publish upcoming school activities.</p>
+        </div>
+
+        <div class="card">
+          <h2>Academic Calendar</h2>
+          <p>Academic calendar management will be added next.</p>
+        </div>
+
+      </section>
+
+      <section class="panel">
+        <h2>Create Announcement</h2>
+
+        <form id="announcementForm">
+
+          <label for="announcementTitle">Announcement title</label>
+          <input
+            id="announcementTitle"
+            maxlength="150"
+            required
+          >
+
+          <label for="announcementContent">Announcement details</label>
+          <textarea
+            id="announcementContent"
+            required
+          ></textarea>
+
+          <button type="submit">Publish Announcement</button>
+
+        </form>
+
+        <p id="announcementMessage" class="status" role="status"></p>
+      </section>
+
+      <section class="panel">
+        <h2>Create School Event</h2>
+
+        <form id="eventForm">
+
+          <label for="eventTitle">Event title</label>
+          <input id="eventTitle" maxlength="150" required>
+
+          <label for="eventDescription">Event description</label>
+          <textarea id="eventDescription" required></textarea>
+
+          <label for="eventDate">Event date</label>
+          <input type="date" id="eventDate" required>
+
+          <label for="eventEndDate">End date (optional)</label>
+          <input type="date" id="eventEndDate">
+
+          <label for="eventTime">Event time (optional)</label>
+          <input type="time" id="eventTime">
+
+          <label for="eventVenue">Venue (optional)</label>
+          <input id="eventVenue" maxlength="150">
+
+          <button type="submit">Publish School Event</button>
+
+        </form>
+
+        <p id="eventMessage" class="status" role="status"></p>
+      </section>
+
+      <section class="panel">
+        <h2>Academic Calendar</h2>
+        <p>Calendar publishing controls will be added in the next stage.</p>
+      </section>
+
+    </div>
+
+    <section id="pageError" class="panel" hidden>
+      <h2>Dashboard Error</h2>
+      <p id="errorMessage" class="status error"></p>
+      <button onclick="window.location.reload()">Try Again</button>
+      <p><a href="admin.html">Return to staff login</a></p>
+    </section>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="dashboard.js"></script>
+
+</body>
+</html>

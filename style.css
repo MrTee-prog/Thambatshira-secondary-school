@@ -44,3 +44,74 @@ footer{display:flex;justify-content:center;align-items:center;gap:18px;padding:2
 .form-message{font-size:12px;color:#1746a2;min-height:1em}
 .footer-privacy{display:inline-block;margin-top:8px;color:#d5e7f7;font-size:12px}
 @media(max-width:650px){.enquiry-form{padding:18px}}
+
+/* LIVE SCHOOL ANNOUNCEMENTS AND EVENTS */
+
+.live-updates-grid {
+  max-width: 1100px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 25px;
+}
+
+.live-heading {
+  font: 700 19px Montserrat, sans-serif;
+  color: var(--navy);
+  margin: 0 0 15px;
+}
+
+.live-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.live-card {
+  background: white;
+  border: 1px solid #dbe6ef;
+  border-left: 5px solid var(--gold);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 7px 20px #102b7009;
+}
+
+.live-card h4 {
+  font: 700 16px Montserrat, sans-serif;
+  color: var(--navy);
+  margin: 0 0 9px;
+}
+
+.live-card p {
+  font-size: 13px;
+  color: #596679;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.live-date {
+  font-size: 12px;
+  font-weight: 700;
+  color: #397dbb;
+}
+
+.live-loading,
+.live-empty,
+.live-error {
+  background: var(--powder-light);
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #526174;
+}
+
+.live-error {
+  color: #a83232;
+  background: #fff0f0;
+}
+
+@media(max-width:650px) {
+  .live-updates-grid {
+    grid-template-columns: 1fr;
+  }
+}
