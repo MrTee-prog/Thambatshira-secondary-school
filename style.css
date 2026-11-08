@@ -115,3 +115,21 @@ footer{display:flex;justify-content:center;align-items:center;gap:18px;padding:2
     grid-template-columns: 1fr;
   }
 }
+
+.staff-portal-link {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 9px 18px;
+    background: #12356f;
+    color: #ffffff;
+    text-decoration: none;
+    border: 1px solid #e5b72f;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.staff-portal-link:hover {
+    background: #e5b72f;
+    color: #12356f;
+}
