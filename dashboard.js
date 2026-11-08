@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   const pageError = document.getElementById("pageError");
   const errorMessage = document.getElementById("errorMessage");
 
+  const $ = id => document.getElementById(id);
+
   function showError(message) {
     loading.hidden = true;
     dashboard.hidden = true;
@@ -17,7 +19,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     element.className = "status " + type;
   }
 
+  function createElement(tag, className, text) {
+    const element = document.createElement(tag);
+    element.className = className;
+    element.textContent = text || "";
+    return element;
+  }
+
+  function formatDate(value) {
+    if (!value) return "";
+
+    const date = new Date(value);
+
+    return date.toLocaleString("en-ZA");
+  }
+
   try {
+
+    // CHECK SUPABASE CONFIGURATION
 
     if (typeof supabaseClient === "undefined") {
       throw new Error(
@@ -25,13 +44,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       );
     }
 
-    // Check login session
+    // CHECK LOGIN SESSION
+
     const { data: sessionData, error: sessionError } =
       await supabaseClient.auth.getSession();
 
-    if (sessionError) {
-      throw sessionError;
-    }
+    if (sessionError) throw sessionError;
 
     if (!sessionData.session) {
       window.location.replace("admin.html");
@@ -40,7 +58,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const user = sessionData.session.user;
 
-    // Verify staff account
+    // VERIFY ACTIVE STAFF ACCOUNT
+
     const { data: staff, error: staffError } =
       await supabaseClient
         .from("staff_members")
@@ -49,76 +68,197 @@ document.addEventListener("DOMContentLoaded", async () => {
         .eq("active", true)
         .maybeSingle();
 
-    if (staffError) {
-      throw staffError;
-    }
+    if (staffError) throw staffError;
 
     if (!staff) {
       await supabaseClient.auth.signOut();
+
       throw new Error(
         "This account is not registered as an active staff member."
       );
     }
 
-    // Display staff details
-    document.getElementById("staffName").textContent =
-      staff.full_name;
+    // DISPLAY STAFF INFORMATION
 
-    document.getElementById("staffRole").textContent =
+    $("staffName").textContent = staff.full_name;
+    $("staffRole").textContent =
       staff.role.replaceAll("_", " ");
 
     loading.hidden = true;
     dashboard.hidden = false;
 
-    // Sign out
-    document.getElementById("logoutButton")
-      .addEventListener("click", async () => {
+    // SIGN OUT
 
-        const button = document.getElementById("logoutButton");
-        button.disabled = true;
+    $("logoutButton").addEventListener("click", async () => {
 
-        const { error } = await supabaseClient.auth.signOut();
+      const button = $("logoutButton");
+      button.disabled = true;
 
-        if (error) {
-          button.disabled = false;
+      const { error } = await supabaseClient.auth.signOut();
 
-          showStatus(
-            document.getElementById("accountMessage"),
-            "Could not sign out: " + error.message,
-            "error"
+      if (error) {
+        button.disabled = false;
+
+        showStatus(
+          $("accountMessage"),
+          "Could not sign out: " + error.message,
+          "error"
+        );
+
+        return;
+      }
+
+      window.location.replace("admin.html");
+    });
+
+    // LOAD ANNOUNCEMENTS
+
+    async function loadAnnouncements() {
+
+      const list = $("announcementList");
+
+      list.textContent = "Loading announcements...";
+
+      const { data, error } = await supabaseClient
+        .from("announcements")
+        .select("id, title, content, created_at, created_by")
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+
+      list.replaceChildren();
+
+      if (!data || data.length === 0) {
+        list.appendChild(
+          createElement(
+            "p",
+            "status",
+            "No announcements have been published yet."
+          )
+        );
+        return;
+      }
+
+      data.forEach(item => {
+
+        const card = createElement("article", "content-item", "");
+
+        const title = createElement("h3", "", item.title);
+
+        const content = createElement(
+          "p",
+          "",
+          item.content
+        );
+
+        const date = createElement(
+          "small",
+          "content-date",
+          "Published: " + formatDate(item.created_at)
+        );
+
+        const deleteButton = createElement(
+          "button",
+          "delete-button",
+          "Delete Announcement"
+        );
+
+        deleteButton.addEventListener("click", async () => {
+
+          const confirmed = window.confirm(
+            'Are you sure you want to delete "' +
+            item.title +
+            '"? This action cannot be undone.'
           );
 
-          return;
-        }
+          if (!confirmed) return;
 
-        window.location.replace("admin.html");
+          deleteButton.disabled = true;
+
+          showStatus(
+            $("manageAnnouncementMessage"),
+            "Deleting announcement..."
+          );
+
+          try {
+
+            const { data: deletedRows, error: deleteError } =
+              await supabaseClient
+                .from("announcements")
+                .delete()
+                .eq("id", item.id)
+                .select("id");
+
+            if (deleteError) throw deleteError;
+
+            if (!deletedRows || deletedRows.length === 0) {
+              throw new Error(
+                "Deletion was not permitted or the announcement no longer exists."
+              );
+            }
+
+            showStatus(
+              $("manageAnnouncementMessage"),
+              "Announcement deleted successfully.",
+              "success"
+            );
+
+            await loadAnnouncements();
+
+          } catch (error) {
+
+            console.error("Announcement deletion error:", error);
+
+            showStatus(
+              $("manageAnnouncementMessage"),
+              "Could not delete announcement: " + error.message,
+              "error"
+            );
+
+            deleteButton.disabled = false;
+          }
+        });
+
+        card.append(
+          title,
+          content,
+          date,
+          document.createElement("br"),
+          deleteButton
+        );
+
+        list.appendChild(card);
       });
+    }
 
-    // Create announcement
-    document.getElementById("announcementForm")
-      .addEventListener("submit", async (event) => {
+    // CREATE ANNOUNCEMENT
+
+    $("announcementForm").addEventListener(
+      "submit",
+      async event => {
 
         event.preventDefault();
 
         const button = event.submitter;
-        const message = document.getElementById("announcementMessage");
+        const message = $("announcementMessage");
 
         button.disabled = true;
+
         showStatus(message, "Publishing announcement...");
 
         try {
 
           const title =
-            document.getElementById("announcementTitle").value.trim();
+            $("announcementTitle").value.trim();
 
           const content =
-            document.getElementById("announcementContent").value.trim();
+            $("announcementContent").value.trim();
 
           const { error } = await supabaseClient
             .from("announcements")
             .insert({
-              title: title,
-              content: content,
+              title,
+              content,
               published: true,
               created_by: user.id
             });
@@ -133,6 +273,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           event.target.reset();
 
+          await loadAnnouncements();
+
         } catch (error) {
 
           showStatus(
@@ -144,40 +286,182 @@ document.addEventListener("DOMContentLoaded", async () => {
         } finally {
           button.disabled = false;
         }
+      }
+    );
 
+    // LOAD SCHOOL EVENTS
+
+    async function loadEvents() {
+
+      const list = $("eventList");
+
+      list.textContent = "Loading school events...";
+
+      const { data, error } = await supabaseClient
+        .from("school_events")
+        .select(
+          "id, title, description, event_date, end_date, event_time, venue, created_at"
+        )
+        .order("event_date", { ascending: true });
+
+      if (error) throw error;
+
+      list.replaceChildren();
+
+      if (!data || data.length === 0) {
+        list.appendChild(
+          createElement(
+            "p",
+            "status",
+            "No school events have been published yet."
+          )
+        );
+        return;
+      }
+
+      data.forEach(item => {
+
+        const card = createElement("article", "content-item", "");
+
+        const title = createElement("h3", "", item.title);
+
+        const description = createElement(
+          "p",
+          "",
+          item.description
+        );
+
+        const dates = item.end_date
+          ? item.event_date + " to " + item.end_date
+          : item.event_date;
+
+        const date = createElement(
+          "p",
+          "content-date",
+          "Date: " + dates
+        );
+
+        const details = createElement(
+          "p",
+          "",
+          [
+            item.event_time ? "Time: " + item.event_time : "",
+            item.venue ? "Venue: " + item.venue : ""
+          ].filter(Boolean).join(" | ")
+        );
+
+        const deleteButton = createElement(
+          "button",
+          "delete-button",
+          "Delete School Event"
+        );
+
+        deleteButton.addEventListener("click", async () => {
+
+          const confirmed = window.confirm(
+            'Are you sure you want to delete "' +
+            item.title +
+            '"? This action cannot be undone.'
+          );
+
+          if (!confirmed) return;
+
+          deleteButton.disabled = true;
+
+          showStatus(
+            $("manageEventMessage"),
+            "Deleting school event..."
+          );
+
+          try {
+
+            const { data: deletedRows, error: deleteError } =
+              await supabaseClient
+                .from("school_events")
+                .delete()
+                .eq("id", item.id)
+                .select("id");
+
+            if (deleteError) throw deleteError;
+
+            if (!deletedRows || deletedRows.length === 0) {
+              throw new Error(
+                "Deletion was not permitted or the event no longer exists."
+              );
+            }
+
+            showStatus(
+              $("manageEventMessage"),
+              "School event deleted successfully.",
+              "success"
+            );
+
+            await loadEvents();
+
+          } catch (error) {
+
+            console.error("Event deletion error:", error);
+
+            showStatus(
+              $("manageEventMessage"),
+              "Could not delete event: " + error.message,
+              "error"
+            );
+
+            deleteButton.disabled = false;
+          }
+        });
+
+        card.append(
+          title,
+          description,
+          date
+        );
+
+        if (item.event_time || item.venue) {
+          card.appendChild(details);
+        }
+
+        card.appendChild(deleteButton);
+
+        list.appendChild(card);
       });
+    }
 
-    // Create school event
-    document.getElementById("eventForm")
-      .addEventListener("submit", async (event) => {
+    // CREATE SCHOOL EVENT
+
+    $("eventForm").addEventListener(
+      "submit",
+      async event => {
 
         event.preventDefault();
 
         const button = event.submitter;
-        const message = document.getElementById("eventMessage");
+        const message = $("eventMessage");
 
         button.disabled = true;
+
         showStatus(message, "Publishing school event...");
 
         try {
 
           const title =
-            document.getElementById("eventTitle").value.trim();
+            $("eventTitle").value.trim();
 
           const description =
-            document.getElementById("eventDescription").value.trim();
+            $("eventDescription").value.trim();
 
           const eventDate =
-            document.getElementById("eventDate").value;
+            $("eventDate").value;
 
           const endDate =
-            document.getElementById("eventEndDate").value;
+            $("eventEndDate").value;
 
           const eventTime =
-            document.getElementById("eventTime").value;
+            $("eventTime").value;
 
           const venue =
-            document.getElementById("eventVenue").value.trim();
+            $("eventVenue").value.trim();
 
           if (endDate && endDate < eventDate) {
             throw new Error(
@@ -188,8 +472,8 @@ document.addEventListener("DOMContentLoaded", async () => {
           const { error } = await supabaseClient
             .from("school_events")
             .insert({
-              title: title,
-              description: description,
+              title,
+              description,
               event_date: eventDate,
               end_date: endDate || null,
               event_time: eventTime || null,
@@ -208,6 +492,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           event.target.reset();
 
+          await loadEvents();
+
         } catch (error) {
 
           showStatus(
@@ -219,15 +505,23 @@ document.addEventListener("DOMContentLoaded", async () => {
         } finally {
           button.disabled = false;
         }
+      }
+    );
 
-      });
+    // INITIAL CONTENT LOAD
+
+    await Promise.all([
+      loadAnnouncements(),
+      loadEvents()
+    ]);
 
   } catch (error) {
 
     console.error("Dashboard error:", error);
 
-    showError(error.message || "An unexpected error occurred.");
-
+    showError(
+      error.message || "An unexpected error occurred."
+    );
   }
 
 });

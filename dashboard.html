@@ -28,6 +28,7 @@
 
     header h1 {
       margin: 0;
+      font-size: 23px;
     }
 
     header p {
@@ -35,7 +36,7 @@
     }
 
     .container {
-      max-width: 1000px;
+      max-width: 1050px;
       margin: 25px auto;
       padding: 0 16px;
     }
@@ -50,7 +51,8 @@
 
     .cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
       gap: 16px;
     }
 
@@ -101,6 +103,10 @@
       background: #a83232;
     }
 
+    .delete-button {
+      background: #a83232;
+    }
+
     .status {
       font-size: 14px;
       color: #526078;
@@ -115,13 +121,45 @@
       color: #16743b;
     }
 
+    .content-item {
+      border: 1px solid #d5dce7;
+      border-left: 5px solid #d5b348;
+      padding: 16px;
+      border-radius: 9px;
+      margin: 12px 0;
+      overflow-wrap: anywhere;
+    }
+
+    .content-item h3 {
+      color: #192e5b;
+      margin-top: 0;
+    }
+
+    .content-item p {
+      white-space: pre-wrap;
+    }
+
+    .content-date {
+      color: #526078;
+      font-size: 12px;
+    }
+
     #loading {
-      padding: 20px;
+      padding: 25px;
       text-align: center;
+      background: white;
+      border-radius: 10px;
     }
 
     [hidden] {
       display: none !important;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #68717d;
+      font-size: 13px;
     }
 
     @media (max-width: 600px) {
@@ -132,131 +170,218 @@
       .panel, .card {
         padding: 17px;
       }
+
+      header h1 {
+        font-size: 19px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <header>
-    <h1>THAMBATSHIRA SECONDARY SCHOOL</h1>
-    <p>Staff Administration Dashboard</p>
-  </header>
+<header>
+  <h1>THAMBATSHIRA SECONDARY SCHOOL</h1>
+  <p>Staff Administration Dashboard</p>
+</header>
 
-  <main class="container">
+<main class="container">
 
-    <p id="loading" style="display: !important; color: red; background: white; padding: 30px; font-size: 24px;"></p>
+  <p id="loading">Checking staff account...</p>
 
-    <div id="dashboardContent" hidden>
+  <div id="dashboardContent" hidden>
 
-      <section class="panel">
-        <h2>Welcome, <span id="staffName">Staff member</span></h2>
+    <section class="panel">
+      <h2>Welcome, <span id="staffName">Staff member</span></h2>
 
-        <p>
-          Your role:
-          <strong id="staffRole">Loading...</strong>
-        </p>
+      <p>
+        Your role:
+        <strong id="staffRole">Loading...</strong>
+      </p>
 
-        <button class="logout" id="logoutButton">
-          Sign Out
-        </button>
+      <button class="logout" id="logoutButton">
+        Sign Out
+      </button>
 
-        <p id="accountMessage" class="status" role="status"></p>
-      </section>
-
-      <section class="cards">
-
-        <div class="card">
-          <h2>Announcements</h2>
-          <p>Publish school notices and important updates.</p>
-        </div>
-
-        <div class="card">
-          <h2>School Events</h2>
-          <p>Publish upcoming school activities.</p>
-        </div>
-
-        <div class="card">
-          <h2>Academic Calendar</h2>
-          <p>Academic calendar management will be added next.</p>
-        </div>
-
-      </section>
-
-      <section class="panel">
-        <h2>Create Announcement</h2>
-
-        <form id="announcementForm">
-
-          <label for="announcementTitle">Announcement title</label>
-          <input
-            id="announcementTitle"
-            maxlength="150"
-            required
-          >
-
-          <label for="announcementContent">Announcement details</label>
-          <textarea
-            id="announcementContent"
-            required
-          ></textarea>
-
-          <button type="submit">Publish Announcement</button>
-
-        </form>
-
-        <p id="announcementMessage" class="status" role="status"></p>
-      </section>
-
-      <section class="panel">
-        <h2>Create School Event</h2>
-
-        <form id="eventForm">
-
-          <label for="eventTitle">Event title</label>
-          <input id="eventTitle" maxlength="150" required>
-
-          <label for="eventDescription">Event description</label>
-          <textarea id="eventDescription" required></textarea>
-
-          <label for="eventDate">Event date</label>
-          <input type="date" id="eventDate" required>
-
-          <label for="eventEndDate">End date (optional)</label>
-          <input type="date" id="eventEndDate">
-
-          <label for="eventTime">Event time (optional)</label>
-          <input type="time" id="eventTime">
-
-          <label for="eventVenue">Venue (optional)</label>
-          <input id="eventVenue" maxlength="150">
-
-          <button type="submit">Publish School Event</button>
-
-        </form>
-
-        <p id="eventMessage" class="status" role="status"></p>
-      </section>
-
-      <section class="panel">
-        <h2>Academic Calendar</h2>
-        <p>Calendar publishing controls will be added in the next stage.</p>
-      </section>
-
-    </div>
-
-    <section id="pageError" class="panel" hidden>
-      <h2>Dashboard Error</h2>
-      <p id="errorMessage" class="status error"></p>
-      <button onclick="window.location.reload()">Try Again</button>
-      <p><a href="admin.html">Return to staff login</a></p>
+      <p id="accountMessage" class="status" role="status"></p>
     </section>
 
-  </main>
+    <section class="cards">
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="supabase-config.js"></script>
-  <script src="dashboard.js"></script>
+      <div class="card">
+        <h2>Announcements</h2>
+        <p>Publish and manage school notices.</p>
+      </div>
+
+      <div class="card">
+        <h2>School Events</h2>
+        <p>Publish and manage upcoming activities.</p>
+      </div>
+
+      <div class="card">
+        <h2>Academic Calendar</h2>
+        <p>Academic dates are displayed on the public website.</p>
+      </div>
+
+    </section>
+
+    <!-- CREATE ANNOUNCEMENT -->
+
+    <section class="panel">
+      <h2>Create Announcement</h2>
+
+      <form id="announcementForm">
+
+        <label for="announcementTitle">
+          Announcement title
+        </label>
+
+        <input
+          id="announcementTitle"
+          maxlength="150"
+          required
+        >
+
+        <label for="announcementContent">
+          Announcement details
+        </label>
+
+        <textarea
+          id="announcementContent"
+          required
+        ></textarea>
+
+        <button type="submit">
+          Publish Announcement
+        </button>
+
+      </form>
+
+      <p id="announcementMessage"
+         class="status"
+         role="status"></p>
+    </section>
+
+    <!-- MANAGE ANNOUNCEMENTS -->
+
+    <section class="panel">
+      <h2>Manage Announcements</h2>
+
+      <p>View and manage published school announcements.</p>
+
+      <div id="announcementList">
+        <p class="status">Loading announcements...</p>
+      </div>
+
+      <p id="manageAnnouncementMessage"
+         class="status"
+         role="status"></p>
+    </section>
+
+    <!-- CREATE SCHOOL EVENT -->
+
+    <section class="panel">
+      <h2>Create School Event</h2>
+
+      <form id="eventForm">
+
+        <label for="eventTitle">Event title</label>
+        <input id="eventTitle" maxlength="150" required>
+
+        <label for="eventDescription">
+          Event description
+        </label>
+
+        <textarea id="eventDescription" required></textarea>
+
+        <label for="eventDate">Event date</label>
+        <input type="date" id="eventDate" required>
+
+        <label for="eventEndDate">
+          End date (optional)
+        </label>
+
+        <input type="date" id="eventEndDate">
+
+        <label for="eventTime">
+          Event time (optional)
+        </label>
+
+        <input type="time" id="eventTime">
+
+        <label for="eventVenue">
+          Venue (optional)
+        </label>
+
+        <input id="eventVenue" maxlength="150">
+
+        <button type="submit">
+          Publish School Event
+        </button>
+
+      </form>
+
+      <p id="eventMessage"
+         class="status"
+         role="status"></p>
+    </section>
+
+    <!-- MANAGE SCHOOL EVENTS -->
+
+    <section class="panel">
+      <h2>Manage School Events</h2>
+
+      <p>View and manage existing school events.</p>
+
+      <div id="eventList">
+        <p class="status">Loading school events...</p>
+      </div>
+
+      <p id="manageEventMessage"
+         class="status"
+         role="status"></p>
+    </section>
+
+    <!-- ACADEMIC CALENDAR -->
+
+    <section class="panel">
+      <h2>Academic Calendar</h2>
+
+      <p>
+        Academic calendar entries are currently managed through
+        your existing Supabase setup and displayed on the public website.
+      </p>
+
+      <p class="status">
+        Calendar management controls can be added in a future update.
+      </p>
+    </section>
+
+  </div>
+
+  <section id="pageError" class="panel" hidden>
+    <h2>Dashboard Error</h2>
+
+    <p id="errorMessage" class="status error"></p>
+
+    <button onclick="window.location.reload()">
+      Try Again
+    </button>
+
+    <p>
+      <a href="admin.html">Return to staff login</a>
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  Thambatshira Secondary School | Staff Administration
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="dashboard.js"></script>
 
 </body>
 </html>
