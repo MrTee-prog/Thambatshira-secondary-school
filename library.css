@@ -1,0 +1,255 @@
+
+/* =====================================
+   THAMBATSHIRA DIGITAL LEARNING LIBRARY
+===================================== */
+
+.library-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 16px 6%;
+    background: #12356f;
+    color: #ffffff;
+    border-bottom: 4px solid #e5b72f;
+}
+
+.library-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.library-brand img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
+.library-header nav {
+    display: flex;
+    gap: 20px;
+}
+
+.library-header nav a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.library-header nav a:hover {
+    color: #e5b72f;
+}
+
+.library-main {
+    min-height: 75vh;
+}
+
+.library-hero {
+    padding: 90px 20px;
+    text-align: center;
+    color: #ffffff;
+    background:
+        linear-gradient(rgba(18, 53, 111, 0.94),
+                        rgba(18, 53, 111, 0.94)),
+        url("school-emblem.jpeg") center/contain no-repeat;
+}
+
+.library-label {
+    display: inline-block;
+    color: #b58b00;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+
+.library-hero .library-label {
+    color: #e5b72f;
+}
+
+.library-hero h1 {
+    font-size: clamp(32px, 5vw, 55px);
+    margin: 10px 0;
+}
+
+.library-hero p {
+    max-width: 650px;
+    margin: 15px auto 25px;
+    line-height: 1.7;
+    color: #e5eaf4;
+}
+
+.library-hero-button {
+    display: inline-block;
+    padding: 13px 25px;
+    background: #e5b72f;
+    color: #12356f;
+    border-radius: 7px;
+    text-decoration: none;
+    font-weight: 800;
+    transition: 0.3s;
+}
+
+.library-hero-button:hover {
+    background: #ffffff;
+    transform: translateY(-2px);
+}
+
+.library-intro {
+    max-width: 1200px;
+    margin: auto;
+    padding: 55px 20px;
+}
+
+.library-intro h2 {
+    color: #12356f;
+    font-size: 30px;
+    margin: 5px 0;
+}
+
+.library-intro > div:first-child p {
+    color: #657187;
+    line-height: 1.6;
+}
+
+.library-filters {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.5fr 1.5fr;
+    gap: 12px;
+    margin: 30px 0;
+}
+
+.library-filters input,
+.library-filters select {
+    width: 100%;
+    min-width: 0;
+    padding: 13px;
+    border: 1px solid #d7deea;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #1c2b45;
+    font-size: 14px;
+    outline: none;
+}
+
+.library-filters input:focus,
+.library-filters select:focus {
+    border-color: #12356f;
+    box-shadow: 0 0 0 3px rgba(18, 53, 111, 0.1);
+}
+
+.resource-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.resource-card {
+    background: #ffffff;
+    border: 1px solid #e1e6ef;
+    border-radius: 12px;
+    padding: 22px;
+    box-shadow: 0 4px 15px rgba(18, 53, 111, 0.06);
+    transition: 0.3s;
+}
+
+.resource-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 22px rgba(18, 53, 111, 0.12);
+}
+
+.resource-card h3 {
+    color: #12356f;
+    margin: 10px 0;
+}
+
+.resource-card p {
+    color: #657187;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.resource-category {
+    display: inline-block;
+    background: #fff5d5;
+    color: #765900;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.resource-download {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 16px;
+    background: #12356f;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.resource-download:hover {
+    background: #e5b72f;
+    color: #12356f;
+}
+
+#libraryMessage {
+    margin-top: 20px;
+    color: #657187;
+    text-align: center;
+}
+
+.library-footer {
+    padding: 25px 15px;
+    text-align: center;
+    background: #12356f;
+    color: #ffffff;
+    border-top: 4px solid #e5b72f;
+}
+
+.library-footer p {
+    margin: 0;
+    font-size: 13px;
+}
+
+/* MOBILE RESPONSIVENESS */
+
+@media (max-width: 850px) {
+    .library-filters {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .resource-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 550px) {
+    .library-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .library-header nav {
+        justify-content: center;
+    }
+
+    .library-hero {
+        padding: 65px 18px;
+    }
+
+    .library-filters,
+    .resource-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .library-intro h2 {
+        font-size: 25px;
+    }
+}

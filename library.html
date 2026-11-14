@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Digital Learning Library | Thambatshira Secondary School</title>
+
+    <meta name="description" content="Access learning resources, revision notes and examination papers at Thambatshira Secondary School.">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="library.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+
+<body>
+
+<header class="library-header">
+    <a href="index.html" class="library-brand">
+        <img src="school-emblem.jpeg" alt="Thambatshira School Emblem">
+        <span>Thambatshira Secondary School</span>
+    </a>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="library.html" aria-current="page">Learning Library</a>
+    </nav>
+</header>
+
+<main class="library-main">
+
+    <section class="library-hero">
+        <span class="library-label">LEARN • PREPARE • ACHIEVE</span>
+
+        <h1>Digital Learning Library</h1>
+
+        <p>
+            Your learning resources, revision materials and
+            examination preparation — all in one place.
+        </p>
+
+        <a href="#library-resources" class="library-hero-button">
+            Explore Resources
+        </a>
+    </section>
+
+    <section class="library-intro" id="library-resources">
+
+        <div>
+            <span class="library-label">ACADEMIC RESOURCES</span>
+            <h2>Explore Learning Materials</h2>
+            <p>
+                Find resources according to your grade,
+                subject and learning needs.
+            </p>
+        </div>
+
+        <div class="library-filters">
+
+            <input
+                type="search"
+                id="resourceSearch"
+                placeholder="Search learning materials..."
+                aria-label="Search learning materials"
+            >
+
+            <select id="gradeFilter" aria-label="Filter by grade">
+                <option value="">All Grades</option>
+                <option value="8">Grade 8</option>
+                <option value="9">Grade 9</option>
+                <option value="10">Grade 10</option>
+                <option value="11">Grade 11</option>
+                <option value="12">Grade 12</option>
+            </select>
+
+            <select id="subjectFilter" aria-label="Filter by subject">
+                <option value="">All Subjects</option>
+                <option>Mathematics</option>
+                <option>Mathematical Literacy</option>
+                <option>History</option>
+                <option>Tourism</option>
+                <option>Agriculture</option>
+                <option>Life Sciences</option>
+                <option>Geography</option>
+            </select>
+
+            <select id="categoryFilter" aria-label="Filter by resource type">
+                <option value="">All Resource Types</option>
+                <option value="past_paper">Past Papers</option>
+                <option value="study_notes">Study Notes</option>
+                <option value="worksheet">Worksheets</option>
+                <option value="study_guide">Study Guides</option>
+            </select>
+
+        </div>
+
+        <div id="resourceList" class="resource-grid">
+            <p>Loading learning resources...</p>
+        </div>
+
+        <p id="libraryMessage" aria-live="polite"></p>
+
+    </section>
+
+</main>
+
+<footer class="library-footer">
+    <p>
+        © <span id="libraryYear"></span>
+        Thambatshira Secondary School.
+        All rights reserved.
+    </p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="library.js"></script>
+
+</body>
+</html>

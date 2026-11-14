@@ -1,383 +1,436 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#192e5b">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Dashboard | Thambatshira Secondary School</title>
+    <link rel="stylesheet" href="style.css">
 
-  <title>Staff Dashboard | Thambatshira Secondary School</title>
+    <style>
+        .dashboard-container {
+            max-width: 1100px;
+            margin: 35px auto;
+            padding: 20px;
+        }
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+        .dashboard-header,
+        .dashboard-section {
+            background: #fff;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.07);
+        }
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #eef1f6;
-      color: #20283a;
-    }
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
 
-    header {
-      background: #192e5b;
-      color: white;
-      padding: 25px;
-      border-bottom: 5px solid #d5b348;
-    }
+        .dashboard-section h2 {
+            color: #12356f;
+            margin-top: 0;
+        }
 
-    header h1 {
-      margin: 0;
-      font-size: 23px;
-    }
+        .dashboard-form {
+            display: grid;
+            gap: 12px;
+        }
 
-    header p {
-      margin-bottom: 0;
-    }
+        .dashboard-form input,
+        .dashboard-form textarea,
+        .dashboard-form select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccd3df;
+            border-radius: 7px;
+            font: inherit;
+            box-sizing: border-box;
+        }
 
-    .container {
-      max-width: 1050px;
-      margin: 25px auto;
-      padding: 0 16px;
-    }
+        .dashboard-form textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
 
-    .panel, .card {
-      background: white;
-      padding: 22px;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      box-shadow: 0 3px 15px #0000000d;
-    }
+        .dashboard-form button,
+        .dashboard-button {
+            background: #12356f;
+            color: white;
+            border: 0;
+            padding: 12px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+            font: inherit;
+        }
 
-    .cards {
-      display: grid;
-      grid-template-columns:
-        repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-    }
+        .dashboard-form button:hover,
+        .dashboard-button:hover {
+            background: #1b4a91;
+        }
 
-    .card {
-      border-top: 5px solid #d5b348;
-    }
+        .logout-button {
+            background: #b52d36;
+        }
 
-    h2 {
-      color: #192e5b;
-    }
+        .resource-item,
+        .manage-item {
+            border: 1px solid #e0e5ed;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 12px 0;
+            overflow-wrap: anywhere;
+        }
 
-    label {
-      display: block;
-      font-weight: bold;
-      margin: 14px 0 6px;
-    }
+        .delete-button {
+            background: #b52d36;
+            color: white;
+            border: 0;
+            border-radius: 6px;
+            padding: 9px 13px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
 
-    input, textarea {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #b8c1d0;
-      border-radius: 7px;
-      font: inherit;
-    }
+        .delete-button:hover {
+            background: #92232b;
+        }
 
-    textarea {
-      min-height: 110px;
-      resize: vertical;
-    }
+        .dashboard-message {
+            margin-top: 10px;
+            font-weight: 600;
+        }
 
-    button {
-      padding: 12px 18px;
-      border: none;
-      border-radius: 7px;
-      background: #192e5b;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 12px;
-    }
+        .dashboard-muted {
+            color: #657187;
+        }
 
-    button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
+        .dashboard-divider {
+            border: 0;
+            border-top: 1px solid #e5e9ef;
+            margin: 22px 0;
+        }
 
-    .logout {
-      background: #a83232;
-    }
+        .resource-management-list {
+            display: grid;
+            gap: 12px;
+            margin-top: 15px;
+        }
 
-    .delete-button {
-      background: #a83232;
-    }
+        .resource-management-item {
+            border: 1px solid #e0e5ed;
+            border-radius: 9px;
+            padding: 18px;
+            background: #fff;
+            overflow-wrap: anywhere;
+        }
 
-    .status {
-      font-size: 14px;
-      color: #526078;
-      overflow-wrap: anywhere;
-    }
+        .resource-management-item h3 {
+            color: #12356f;
+            margin: 0 0 8px;
+        }
 
-    .error {
-      color: #b42318;
-    }
+        .resource-management-item p {
+            margin: 6px 0;
+        }
 
-    .success {
-      color: #16743b;
-    }
+        .resource-management-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+            align-items: center;
+        }
 
-    .content-item {
-      border: 1px solid #d5dce7;
-      border-left: 5px solid #d5b348;
-      padding: 16px;
-      border-radius: 9px;
-      margin: 12px 0;
-      overflow-wrap: anywhere;
-    }
+        .resource-view-link {
+            display: inline-block;
+            padding: 9px 13px;
+            background: #12356f;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+        }
 
-    .content-item h3 {
-      color: #192e5b;
-      margin-top: 0;
-    }
+        .resource-view-link:hover {
+            background: #1b4a91;
+        }
 
-    .content-item p {
-      white-space: pre-wrap;
-    }
+        .resource-management-actions .delete-button {
+            margin-top: 0;
+        }
 
-    .content-date {
-      color: #526078;
-      font-size: 12px;
-    }
+        @media (max-width: 600px) {
+            .dashboard-container {
+                padding: 12px;
+            }
 
-    #loading {
-      padding: 25px;
-      text-align: center;
-      background: white;
-      border-radius: 10px;
-    }
-
-    [hidden] {
-      display: none !important;
-    }
-
-    footer {
-      text-align: center;
-      padding: 25px;
-      color: #68717d;
-      font-size: 13px;
-    }
-
-    @media (max-width: 600px) {
-      header {
-        padding: 18px;
-      }
-
-      .panel, .card {
-        padding: 17px;
-      }
-
-      header h1 {
-        font-size: 19px;
-      }
-    }
-  </style>
+            .dashboard-header,
+            .dashboard-section {
+                padding: 18px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<header>
-  <h1>THAMBATSHIRA SECONDARY SCHOOL</h1>
-  <p>Staff Administration Dashboard</p>
-</header>
+<main class="dashboard-container">
 
-<main class="container">
+    <header class="dashboard-header">
+        <div>
+            <h1>Staff Dashboard</h1>
+            <p>Thambatshira Secondary School</p>
+            <p id="staffWelcome">Checking your account...</p>
+            <p id="staffRole" class="dashboard-muted"></p>
+        </div>
 
-  <p id="loading">Checking staff account...</p>
+        <button
+            id="logoutButton"
+            class="dashboard-button logout-button"
+        >
+            Sign Out
+        </button>
+    </header>
 
-  <div id="dashboardContent" hidden>
+    <!-- ANNOUNCEMENTS -->
+    <section class="dashboard-section">
+        <h2>Create Announcement</h2>
 
-    <section class="panel">
-      <h2>Welcome, <span id="staffName">Staff member</span></h2>
+        <form id="announcementForm" class="dashboard-form">
+            <label for="announcementTitle">Announcement title</label>
+            <input id="announcementTitle" type="text" required>
 
-      <p>
-        Your role:
-        <strong id="staffRole">Loading...</strong>
-      </p>
+            <label for="announcementContent">Announcement details</label>
+            <textarea id="announcementContent" required></textarea>
 
-      <button class="logout" id="logoutButton">
-        Sign Out
-      </button>
+            <button type="submit">Publish Announcement</button>
 
-      <p id="accountMessage" class="status" role="status"></p>
+            <p
+                id="announcementMessage"
+                class="dashboard-message"
+                role="status"
+            ></p>
+        </form>
+
+        <hr class="dashboard-divider">
+
+        <h2>Manage Announcements</h2>
+        <div id="announcementList">Loading announcements...</div>
+
+        <p
+            id="manageAnnouncementMessage"
+            class="dashboard-message"
+            role="status"
+        ></p>
     </section>
 
-    <section class="cards">
+    <!-- SCHOOL EVENTS -->
+    <section class="dashboard-section">
+        <h2>Create School Event</h2>
 
-      <div class="card">
-        <h2>Announcements</h2>
-        <p>Publish and manage school notices.</p>
-      </div>
+        <form id="eventForm" class="dashboard-form">
+            <label for="eventTitle">Event title</label>
+            <input id="eventTitle" type="text" required>
 
-      <div class="card">
-        <h2>School Events</h2>
-        <p>Publish and manage upcoming activities.</p>
-      </div>
+            <label for="eventDescription">Description</label>
+            <textarea id="eventDescription"></textarea>
 
-      <div class="card">
-        <h2>Academic Calendar</h2>
-        <p>Academic dates are displayed on the public website.</p>
-      </div>
+            <label for="eventDate">Start date</label>
+            <input id="eventDate" type="date" required>
 
+            <label for="eventEndDate">End date (optional)</label>
+            <input id="eventEndDate" type="date">
+
+            <label for="eventTime">Time (optional)</label>
+            <input id="eventTime" type="time">
+
+            <label for="eventVenue">Venue (optional)</label>
+            <input id="eventVenue" type="text">
+
+            <button type="submit">Publish Event</button>
+
+            <p
+                id="eventMessage"
+                class="dashboard-message"
+                role="status"
+            ></p>
+        </form>
+
+        <hr class="dashboard-divider">
+
+        <h2>Manage School Events</h2>
+        <div id="eventList">Loading events...</div>
+
+        <p
+            id="manageEventMessage"
+            class="dashboard-message"
+            role="status"
+        ></p>
     </section>
 
-    <!-- CREATE ANNOUNCEMENT -->
+    
+<!-- ACADEMIC CALENDAR -->
+<section class="dashboard-section">
+    <h2>Academic Calendar Management</h2>
 
-    <section class="panel">
-      <h2>Create Announcement</h2>
+    <p class="dashboard-muted">
+        Publish important academic dates for learners,
+        parents and staff.
+    </p>
 
-      <form id="announcementForm">
-
-        <label for="announcementTitle">
-          Announcement title
-        </label>
-
+    <form id="calendarForm" class="dashboard-form">
+        <label for="calendarTitle">Calendar title</label>
         <input
-          id="announcementTitle"
-          maxlength="150"
-          required
+            id="calendarTitle"
+            type="text"
+            placeholder="e.g. Term 1 Examinations"
+            required
         >
 
-        <label for="announcementContent">
-          Announcement details
-        </label>
-
+        <label for="calendarDescription">Description</label>
         <textarea
-          id="announcementContent"
-          required
+            id="calendarDescription"
+            placeholder="Additional information"
         ></textarea>
 
-        <button type="submit">
-          Publish Announcement
-        </button>
+        <label for="calendarCategory">Category</label>
+        <select id="calendarCategory" required>
+            <option value="academic">Academic</option>
+            <option value="exam">Examinations</option>
+            <option value="holiday">School Holiday</option>
+            <option value="term">School Term</option>
+        </select>
 
-      </form>
+        <label for="calendarStartDate">Start date</label>
+        <input id="calendarStartDate" type="date" required>
 
-      <p id="announcementMessage"
-         class="status"
-         role="status"></p>
+        <label for="calendarEndDate">End date (optional)</label>
+        <input id="calendarEndDate" type="date">
+
+        <button type="submit">Publish Calendar Entry</button>
+
+        <p
+            id="calendarMessage"
+            class="dashboard-message"
+            role="status"
+        ></p>
+    </form>
+
+    <hr class="dashboard-divider">
+
+    <h2>Manage Calendar Entries</h2>
+
+    <div id="calendarList">
+        Loading calendar entries...
+    </div>
+
+    <p
+        id="manageCalendarMessage"
+        class="dashboard-message"
+        role="status"
+    ></p>
+</section>
+
+    <!-- LEARNING LIBRARY UPLOAD -->
+    <section class="dashboard-section">
+        <h2>Learning Library</h2>
+
+        <p class="dashboard-muted">
+            Upload approved educational resources for learners in Grades 8–12.
+        </p>
+
+        <form id="resourceForm" class="dashboard-form">
+            <label for="resourceTitle">Resource title</label>
+            <input
+                type="text"
+                id="resourceTitle"
+                placeholder="e.g. Grade 12 Mathematics June Exam"
+                required
+            >
+
+            <label for="resourceDescription">Description</label>
+            <textarea
+                id="resourceDescription"
+                placeholder="Briefly describe this resource"
+            ></textarea>
+
+            <label for="resourceGrade">Grade</label>
+            <select id="resourceGrade" required>
+                <option value="">Select grade</option>
+                <option value="8">Grade 8</option>
+                <option value="9">Grade 9</option>
+                <option value="10">Grade 10</option>
+                <option value="11">Grade 11</option>
+                <option value="12">Grade 12</option>
+            </select>
+
+            <label for="resourceSubject">Subject</label>
+            <select id="resourceSubject" required>
+                <option value="">Select subject</option>
+                <option value="Mathematics">Mathematics</option>
+                <option value="Mathematical Literacy">Mathematical Literacy</option>
+                <option value="History">History</option>
+                <option value="Tourism">Tourism</option>
+                <option value="Agriculture">Agriculture</option>
+                <option value="Life Sciences">Life Sciences</option>
+                <option value="Geography">Geography</option>
+            </select>
+
+            <label for="resourceCategory">Resource type</label>
+            <select id="resourceCategory" required>
+                <option value="">Select type</option>
+                <option value="past_paper">Past Paper</option>
+                <option value="study_notes">Study Notes</option>
+                <option value="worksheet">Worksheet</option>
+                <option value="study_guide">Study Guide</option>
+            </select>
+
+            <label for="resourceFile">PDF document</label>
+            <input
+                type="file"
+                id="resourceFile"
+                accept=".pdf,application/pdf"
+                required
+            >
+
+            <button type="submit">Upload Learning Resource</button>
+
+            <p
+                id="resourceUploadMessage"
+                class="dashboard-message"
+                role="status"
+            ></p>
+        </form>
     </section>
 
-    <!-- MANAGE ANNOUNCEMENTS -->
+    <!-- MANAGE LEARNING RESOURCES -->
+    <section class="dashboard-section">
+        <h2>Manage Learning Resources</h2>
 
-    <section class="panel">
-      <h2>Manage Announcements</h2>
+        <p class="dashboard-muted">
+            View and manage educational resources uploaded
+            to the school's Digital Learning Library.
+        </p>
 
-      <p>View and manage published school announcements.</p>
+        <p
+            id="resourceManagementMessage"
+            class="dashboard-message"
+            role="status"
+        ></p>
 
-      <div id="announcementList">
-        <p class="status">Loading announcements...</p>
-      </div>
-
-      <p id="manageAnnouncementMessage"
-         class="status"
-         role="status"></p>
+        <div
+            id="resourceManagementList"
+            class="resource-management-list"
+        >
+            <p>Loading learning resources...</p>
+        </div>
     </section>
-
-    <!-- CREATE SCHOOL EVENT -->
-
-    <section class="panel">
-      <h2>Create School Event</h2>
-
-      <form id="eventForm">
-
-        <label for="eventTitle">Event title</label>
-        <input id="eventTitle" maxlength="150" required>
-
-        <label for="eventDescription">
-          Event description
-        </label>
-
-        <textarea id="eventDescription" required></textarea>
-
-        <label for="eventDate">Event date</label>
-        <input type="date" id="eventDate" required>
-
-        <label for="eventEndDate">
-          End date (optional)
-        </label>
-
-        <input type="date" id="eventEndDate">
-
-        <label for="eventTime">
-          Event time (optional)
-        </label>
-
-        <input type="time" id="eventTime">
-
-        <label for="eventVenue">
-          Venue (optional)
-        </label>
-
-        <input id="eventVenue" maxlength="150">
-
-        <button type="submit">
-          Publish School Event
-        </button>
-
-      </form>
-
-      <p id="eventMessage"
-         class="status"
-         role="status"></p>
-    </section>
-
-    <!-- MANAGE SCHOOL EVENTS -->
-
-    <section class="panel">
-      <h2>Manage School Events</h2>
-
-      <p>View and manage existing school events.</p>
-
-      <div id="eventList">
-        <p class="status">Loading school events...</p>
-      </div>
-
-      <p id="manageEventMessage"
-         class="status"
-         role="status"></p>
-    </section>
-
-    <!-- ACADEMIC CALENDAR -->
-
-    <section class="panel">
-      <h2>Academic Calendar</h2>
-
-      <p>
-        Academic calendar entries are currently managed through
-        your existing Supabase setup and displayed on the public website.
-      </p>
-
-      <p class="status">
-        Calendar management controls can be added in a future update.
-      </p>
-    </section>
-
-  </div>
-
-  <section id="pageError" class="panel" hidden>
-    <h2>Dashboard Error</h2>
-
-    <p id="errorMessage" class="status error"></p>
-
-    <button onclick="window.location.reload()">
-      Try Again
-    </button>
-
-    <p>
-      <a href="admin.html">Return to staff login</a>
-    </p>
-  </section>
 
 </main>
-
-<footer>
-  Thambatshira Secondary School | Staff Administration
-</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
